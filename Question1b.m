@@ -71,13 +71,18 @@ xx = repmat(linspace(-L/2, L/2, nx), ny, 1);
 yy = repmat(linspace(0, W, ny), nx, 1)';
 
 figure('name', 'Analytical Solution')
-for i=1:200
+for i=1:100
     n = 2*i -1;
     VAnalytical = VAnalytical + 1/n.*cosh(n.*pi.*xx./W) ...
         ./cosh(n.*pi.*(L./2)./W).*sin(n.*pi.*yy./W);
     surf(linspace(-W/2, W/2, nx), linspace(0, L, ny), VAnalytical);
     pause(0.1)
 end
+xlabel('x');
+ylabel('y');
+zlabel('Potential (V)');
+title(sprintf('Analytical Solution (100 Iterations)', dx));
+set(gca, 'View', [45 45]);
 
 if save_plots
     FN2 = 'Question 1b - Annalytical Solution';   
@@ -88,7 +93,8 @@ figure('name', 'FD Solution');
 surf(linspace(0,L,nx),linspace(0,W,ny),V);
 xlabel('x');
 ylabel('y');
-title(sprintf('FD Solution (Grid Spacing %.2f)', dx));
+zlabel('Potential (V)');
+title(sprintf('FD Solution', dx));
 set(gca, 'View', [45 45]);
 
 if save_plots

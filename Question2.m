@@ -3,7 +3,7 @@ clear; %intialization
 
 set(0,'DefaultFigureWindowStyle','docked');
 
-save_plots = 1;
+save_plots = 0;
 
 % Potential and Length and Width of the rectangular region
 W = 2;
@@ -26,7 +26,7 @@ cMap = zeros(nx, ny);
 B = zeros(1, nx*ny);
 
 % Define the limits of the boxes
-boxes = [nx*1/3 nx*2/3 ny*1/3 ny*2/3]; 
+boxes = [nx*2/5 nx*3/5 ny*1/3 ny*2/3]; 
 
 for i=1:nx
     for j=1:ny
@@ -76,25 +76,13 @@ for x = 1:nx
     end
 end
 
-V=G\B';
-
-for i=1:nx
-    for j=1:ny
-
-
-        N=j+(i-1)*ny;
-
-        Vmat(j,i)=V(N);
-
-    end
-end
-
 % Sigma(x,y) Surface Plot
 figure('name', 'sigma(x, y)')
 surf(cMap');
 xlabel("X position")
 ylabel("Y position")
 zlabel("\sigma(x, y)")
+title("Conductivity")
 axis tight
 view(0,90)
 
@@ -121,6 +109,7 @@ axis tight
 xlabel("X position")
 ylabel("Y position")
 zlabel("Voltage")
+title("Potential")
 view(0, 90)
 
 if save_plots
@@ -138,6 +127,7 @@ quiver(-Ex, -Ey)
 xlabel("X position")
 ylabel("Y position")
 zlabel("E(x, y)")
+title("Electric Field")
 axis tight
 view(0, 90);
 
@@ -151,6 +141,7 @@ quiver(Jx, Jy)
 xlabel("X position")
 ylabel("Y position")
 zlabel("J(x, y)")
+title("Current Density")
 axis tight
 view(0, 90);
 
@@ -158,4 +149,14 @@ if save_plots
     FN2 = 'Question 2a - CurrentDensity';   
     print(gcf, '-dpng', '-r600', FN2);  %Save graph in PNG
 end
+
+Ex = -Ex;
+Ey = -Ey;
+
+eFlowx = cMap .* Ex';
+eFlowy = cMap .* Ey';
+
+C0 = sum(eFlowx(1,:));
+Cnx = sum(eFlowx(nx, :));
+Curr = (C0 + Cnx) * 0.5;
 

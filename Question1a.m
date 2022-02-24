@@ -65,7 +65,8 @@ figure('name', 'Question 1(a) Solution');
 surf(linspace(0,L,nx),linspace(0,W,ny),V);
 xlabel('x');
 ylabel('y');
-title(sprintf('FD Solution (Grid Spacing %.2f)', dx));
+zlabel('Potential (V)')
+title(sprintf('FD Solution', dx));
 set(gca, 'View', [45 45]);
 
 if save_plots
