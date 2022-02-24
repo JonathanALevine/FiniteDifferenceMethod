@@ -4,7 +4,6 @@ clear; %intialization
 set(0,'DefaultFigureWindowStyle','docked');
 
 save_plots = 1;
-wid
 
 % Potential and Length and Width of the rectangular region
 W = 2;
@@ -18,7 +17,7 @@ nx = L/dx;
 ny = W/dy;
 
 % Conductivities
-sigma_inside = 0.01;
+sigma_inside = linspace(0, 10, 100);
 sigma_outside = 1;
 
 % GV = 0 form
@@ -26,27 +25,13 @@ G = sparse(nx*ny);
 cMap = zeros(nx, ny);
 B = zeros(1, nx*ny);
 
-% Define the limits of the boxes
-left_side_positions = [nx*1/6, nx*1.25/6, nx*1.5/6, nx*1.75/6, nx*2/6, nx*2.25/6, nx*2.5/6, nx*2.75/6];
-right_side_positions = [nx*(1-1/6), nx*(1-1.25/6), nx*(1-1.5/6), nx*(1-1.75/6), nx*(1-2/6), nx*(1-2.25/6), nx*(1-2.5/6), nx*(1-2.75/6)];
+boxes = [nx*2/5 nx*3/5 ny*1/3 ny*2/3]; 
 
-bottom_heights = [ny*1/3, ny*1.25/3, ny*1.5/3];
-top_heights = [ny*(1-1/3), ny*(1-1.25/3), ny*(1-1.5/3)];
-
-for counter = 1:length(left_side_positions)
-
-    if width_sim
-        boxes = [left_side_positions(counter) right_side_positions(counter) ny*1/3 ny*2/3];
-    end
-    
-    if height_sim
-        boxes = [nx*2/5 nx*3/5 bottom_heights(counter) top_heights(counter)]; 
-    end
-
+for counter = 1:length(sigma_inside)
     for i=1:nx
         for j=1:ny
             if i > boxes(1) && i < boxes(2) & (j < boxes(3) || j > boxes(4))
-                cMap(i, j) = sigma_inside;
+                cMap(i, j) = sigma_inside(counter);
             else
                 cMap(i, j) = sigma_outside;
             end
@@ -117,35 +102,21 @@ for counter = 1:length(left_side_positions)
     Cnx = sum(eFlowx(nx, :));
     
     Curr(counter) = (C0 + Cnx) * 0.5;
-    width(counter) = boxes(2) - boxes(1);
 
 end
 
-if width_sim
-    figure('name', 'Current vs. Bottleneck Width');
-    plot(width, Curr)
-    xlabel('Bottleneck Width');
-    ylabel('Current (A)');
-    title('Current vs. Bottleneck Width');
-    ylim([0 1.5*max(Curr)])
+figure('name', 'Current vs. Box Conductivity');
+plot(sigma_inside, Curr)
+hold on
+    plot(sigma_inside, Curr, 'b*');
+hold off
+xlabel('Box Conductivity (S/m)');
+ylabel('Current (A)');
+title('Current vs. Box Conductivity');
+ylim([0 1.5*max(Curr)])
 
-    if save_plots
-        FN2 = 'Question 2c - Width Plot';   
-        print(gcf, '-dpng', '-r600', FN2);  %Save graph in PNG
-    end
-end
-
-if height_sim
-    figure('name', 'Current vs. Bottleneck Height');
-    plot(width, Curr)
-    xlabel('Bottleneck Height');
-    ylabel('Current (A)');
-    title('Current vs. Bottleneck Width');
-    ylim([0 1.5*max(Curr)])
-
-    if save_plots
-        FN2 = 'Question 2c - Height Plot';   
-        print(gcf, '-dpng', '-r600', FN2);  %Save graph in PNG
-    end
+if save_plots
+    FN2 = 'Question 2d';   
+    print(gcf, '-dpng', '-r600', FN2);  %Save graph in PNG
 end
 

@@ -136,7 +136,8 @@ if width_sim
     xlabel('Bottleneck Width');
     ylabel('Current (A)');
     title('Current vs. Bottleneck Width');
-    ylim([0 1.5*max(Curr)])
+    xlim([min(width) max(width)]);
+    ylim([0 1.5*max(Curr)]);
 
     if save_plots
         FN2 = 'Question 2c - Width Plot';   
@@ -153,7 +154,8 @@ if height_sim
     xlabel('Bottleneck Height');
     ylabel('Current (A)');
     title('Current vs. Bottleneck Height');
-    ylim([0 1.5*max(Curr)])
+    xlim([min(height) max(height)]);
+    ylim([0 1.5*max(Curr)]);
 
     if save_plots
         FN2 = 'Question 2c - Height Plot';   
