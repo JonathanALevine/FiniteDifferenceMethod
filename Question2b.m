@@ -41,11 +41,11 @@ for counter = 1:length(dx)
 
     for x = 1:nx
         for y = 1:ny
-            n = y + (x-1)*ny;
-            nxp = y + (x+1-1)*ny;
-            nxm = y + (x-1-1)*ny;
-            nyp = y + 1 + (x-1)*ny;
-            nym = y - 1 + (x-1)*ny;
+            n = MapNode(y, x, ny);
+            nxp = MapNode(y, x+1, ny);
+            nxm = MapNode(y, x-1, ny);
+            nyp = MapNode(y+1, x, ny);
+            nym = MapNode(y-1, x, ny);
 
             if x == 1
                 G(n, n) = 1;
