@@ -68,6 +68,8 @@ ylabel('y');
 zlabel('Potential (V)')
 title(sprintf('FD Solution', dx));
 set(gca, 'View', [45 45]);
+c = colorbar;
+c.Label.String = 'Potential Scale (V)';
 
 if save_plots
     FN2 = 'Question 1a - FD Solution';   

@@ -28,17 +28,17 @@ cMap = zeros(nx, ny);
 B = zeros(1, nx*ny);
 
 % Define the limits of the boxes
-left_side_positions = linspace(nx*0.5/6, nx*3/6);
+left_side_positions = linspace(nx*0.1/6, nx*2.9/6);
 for counter = 1:length(left_side_positions)
     right_side_positions(counter) = nx-left_side_positions(counter);
 end
 
-bottom_heights = linspace(ny*0.5/3, ny*1.5/3, 25);
+bottom_heights = linspace(ny*0.5/3, ny*1.5/3);
 for counter = 1:length(bottom_heights)
     top_heights(counter) = ny-bottom_heights(counter);
 end
 
-for counter = 1:length(bottom_heights)
+for counter = 1:length(left_side_positions)
 
     if width_sim
         boxes = [left_side_positions(counter) right_side_positions(counter) ny*1/3 ny*2/3];
@@ -122,8 +122,8 @@ for counter = 1:length(bottom_heights)
     Cnx = sum(eFlowx(nx, :));
     
     Curr(counter) = (C0 + Cnx) * 0.5;
-    width(counter) = boxes(2) - boxes(1);
-    height(counter) = boxes(3);
+    width(counter) = (boxes(2) - boxes(1))/nx*100;
+    height(counter) = boxes(3)/ny * 100;
 end
 
 if width_sim
@@ -132,7 +132,7 @@ if width_sim
     hold on
         plot(width, Curr, 'b*');
     hold off
-    xlabel('Bottleneck Width');
+    xlabel('Bottleneck Width (% Of Surface Width)');
     ylabel('Current (A)');
     title('Current vs. Bottleneck Width');
     xlim([min(width) max(width)]);
@@ -150,7 +150,7 @@ if height_sim
     hold on
         plot(height, Curr, 'b*');
     hold off
-    xlabel('Bottleneck Height');
+    xlabel('Bottleneck Height (% Of Surface Height)');
     ylabel('Current (A)');
     title('Current vs. Bottleneck Height');
     xlim([min(height) max(height)]);

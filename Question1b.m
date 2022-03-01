@@ -83,9 +83,11 @@ ylabel('y');
 zlabel('Potential (V)');
 title(sprintf('Analytical Solution (100 Iterations)', dx));
 set(gca, 'View', [45 45]);
+c = colorbar;
+c.Label.String = 'Potential Scale (V)';
 
 if save_plots
-    FN2 = 'Question 1b - Annalytical Solution';   
+    FN2 = 'Question 1b - Analytical Solution';   
     print(gcf, '-dpng', '-r600', FN2);  %Save graph in PNG
 end
 
@@ -96,6 +98,8 @@ ylabel('y');
 zlabel('Potential (V)');
 title(sprintf('FD Solution', dx));
 set(gca, 'View', [45 45]);
+c = colorbar;
+c.Label.String = 'Potential Scale (V)';
 
 if save_plots
     FN2 = 'Question 1b - FD Solution';   

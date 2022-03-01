@@ -14,6 +14,7 @@ dx = linspace(0.01, 1, 20);
 dy = linspace(0.01, 1, 20);
 
 for counter = 1:length(dx)
+    counter
     nx = floor(L/dx(counter));
     ny = floor(W/dy(counter));
 

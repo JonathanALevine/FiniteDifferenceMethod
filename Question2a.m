@@ -3,7 +3,7 @@ clear; %intialization
 
 set(0,'DefaultFigureWindowStyle','docked');
 
-save_plots = 0;
+save_plots = 1;
 
 % Potential and Length and Width of the rectangular region
 W = 2;
@@ -85,6 +85,8 @@ zlabel("\sigma(x, y)")
 title("Conductivity")
 axis tight
 view(0,90)
+c = colorbar;
+c.Label.String = 'Conductivity Scale (S/m)';
 
 if save_plots
     FN2 = 'Question 2a - sigma';   
@@ -111,6 +113,8 @@ ylabel("Y position")
 zlabel("Voltage")
 title("Potential")
 view(0, 90)
+c = colorbar;
+c.Label.String = 'Potential Scale (V)';
 
 if save_plots
     FN2 = 'Question 2a - Potential';   
@@ -144,6 +148,7 @@ zlabel("J(x, y)")
 title("Current Density")
 axis tight
 view(0, 90);
+
 
 if save_plots
     FN2 = 'Question 2a - CurrentDensity';   
