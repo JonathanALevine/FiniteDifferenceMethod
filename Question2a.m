@@ -3,7 +3,7 @@ clear; %intialization
 
 set(0,'DefaultFigureWindowStyle','docked');
 
-save_plots = 1;
+save_plots = 0;
 
 % Potential and Length and Width of the rectangular region
 W = 2;
